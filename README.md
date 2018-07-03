@@ -1,4 +1,4 @@
-symfonysandbox
+Symfony Twitter Sandbox
 ==============
 
 A Symfony project.
