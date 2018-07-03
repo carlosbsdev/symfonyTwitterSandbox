@@ -17,13 +17,9 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         
-        
-        
-        
-        
         return $this->render('default/index.html.twig',
                 array(
-                        'contenido' => null
+                        'contenido' => "Usando la API pública de Twitter, para más info consulta \"About\""
                     ));
     }
     
@@ -75,5 +71,27 @@ class DefaultController extends Controller
                     'contenido' => null,
                         'form' => $form->createView()
                     ));
+    }
+    /**
+     * @Route("/trending", name="trends")
+     */
+    public function trendsAction(Request $request)
+    {
+        
+            $connection = new TwitterOAuth(
+                $this->getParameter('twitter_consumer_api_key'),
+                $this->getParameter('twitter_consumer_api_key_secret'),
+                $this->getParameter('twitter_access_token'),
+                $this->getParameter('twitter_access_token_secret')
+                );
+        
+        //Returns the top 50 trending topics for a specific WOEID, if trending information is available for it.
+        $content = $connection->get("trends/place", ["id" => 1]);
+        
+        return $this->render('default/trends.html.twig',
+                array(
+                        'contenido' => $content
+                    ));
+        
     }
 }
